@@ -1,6 +1,7 @@
 package io.github.rajveer.dragonfly.simulations;
 
 import io.github.rajveer.dragonfly.systems.SolarSystem;
+import io.github.rajveer.dragonfly.utils.Figure;
 import io.github.rajveer.dragonfly.utils.Vector;
 import io.github.rajveer.dragonfly.ode.RK4Solver;
 import io.github.rajveer.dragonfly.ode.ODESolver;
@@ -47,10 +48,28 @@ public class SolarSystemSim {
         // Create SolarSystem and RK4 solver
         List<Vector> trajectory = getVectors(masses, initialStateKm);
 
+        // Figure Series-PosLists
+        List<double[]> xs_fig = new ArrayList<>();
+        List<double[]> ys_fig = new ArrayList<>();
+        List<double[]> zs_fig = new ArrayList<>();
+
 // Output the trajectory
         for (int i = 0; i < trajectory.size(); i++) {
             System.out.println("Day " + i + ": " + trajectory.get(i));
+            xs_fig.add(new double[]{i, trajectory.get(i).get(0 + (6*1))});
+            ys_fig.add(new double[]{i, trajectory.get(i).get(1 + (6*1))});
+            zs_fig.add(new double[]{i, trajectory.get(i).get(2 + (6*1))});
         }
+
+        Figure.setTitle("Mercury Position Over 365 Days");
+        Figure.setXLabel("Days");
+        Figure.setYLabel("Position (km)");
+
+        Figure.addSeries("X Position", xs_fig);
+        Figure.addSeries("Y Position", ys_fig);
+        Figure.addSeries("Z Position", zs_fig);
+
+        Figure.show();
 
     }
 
