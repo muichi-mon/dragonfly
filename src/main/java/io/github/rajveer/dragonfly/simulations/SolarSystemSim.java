@@ -19,6 +19,21 @@ public class SolarSystemSim {
                 6.42e23, 1.90e27, 5.68e26, 1.35e23, 8.68e25, 1.02e26
         );
 
+        double[] radii = {
+                696340,  // Sun
+                2440,    // Mercury
+                6052,    // Venus
+                6371,    // Earth
+                1737,    // Moon
+                3390,    // Mars
+                69911,   // Jupiter
+                58232,   // Saturn
+                2575,    // Titan
+                25362,   // Uranus
+                24622    // Neptune
+        };
+
+
         // Initial positions (x, y, z) in km and velocities (vx, vy, vz) in km/s
         double[] initialStateKm = {
                 // Sun
@@ -56,12 +71,12 @@ public class SolarSystemSim {
 // Output the trajectory
         for (int i = 0; i < trajectory.size(); i++) {
             System.out.println("Day " + i + ": " + trajectory.get(i));
-            xs_fig.add(new double[]{i, trajectory.get(i).get(0 + (6*1))});
-            ys_fig.add(new double[]{i, trajectory.get(i).get(1 + (6*1))});
-            zs_fig.add(new double[]{i, trajectory.get(i).get(2 + (6*1))});
+            xs_fig.add(new double[]{i, trajectory.get(i).get(0 + (6*4))});
+            ys_fig.add(new double[]{i, trajectory.get(i).get(1 + (6*4))});
+            zs_fig.add(new double[]{i, trajectory.get(i).get(2 + (6*4))});
         }
 
-        Figure.setTitle("Mercury Position Over 365 Days");
+        Figure.setTitle("Moon Position Over 4 years");
         Figure.setXLabel("Days");
         Figure.setYLabel("Position (km)");
 
@@ -79,7 +94,7 @@ public class SolarSystemSim {
 
 // Simulation parameters
         double t0 = 0;
-        double tEnd = 86400 * 365; // 1 year
+        double tEnd = 86400 * 365 * 4; // 1 year
         double dt = 86400;         // 1 day
 
         Vector y = new Vector(initialStateKm);

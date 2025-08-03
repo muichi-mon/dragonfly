@@ -166,6 +166,18 @@ public class Vector {
     }
 
     /**
+     * Returns a copy of the internal array representing this vector.
+     * <p>
+     * This method provides read-only access to the underlying data, allowing
+     * safe manipulation of the vector's elements outside the class.
+     *
+     * @return a new array containing the elements of this vector
+     */
+    public double[] toArray() {
+        return Arrays.copyOf(data, data.length);
+    }
+
+    /**
      * Returns a string representation of this vector.
      *
      * @return the string representation
