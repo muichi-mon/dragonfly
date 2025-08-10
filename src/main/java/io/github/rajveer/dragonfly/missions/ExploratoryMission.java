@@ -17,9 +17,18 @@ import java.util.Random;
  * - Uses finite-difference gradient descent with random restarts.
  * - Probe mass = 50,000 kg appended as last body.
  * - Keeps SolarSystem class unchanged (Sun remains fixed in your current implementation).
+ *
+ * Units:
+ * <ul>
+ *   <li>Distance: kilometers (km)</li>
+ *   <li>Velocity: kilometers per second (km/s)</li>
+ *   <li>Mass: kilograms (kg)</li>
+ *   <li>Time: seconds (s)</li>
+ * </ul>
  */
 public class ExploratoryMission {
 
+    /** Initial positions and velocities (rx, ry, rz, vx, vy, vz) of Sun and planets in km / km/s. */
     private static final double[] INITIAL_STATE_KM = {
             // Sun
             0, 0, 0, 0, 0, 0,
@@ -45,35 +54,37 @@ public class ExploratoryMission {
             4.47e9, -5.31e7, -1.02e8, 0.0287, 5.47, -0.113
     };
 
+    /** Masses of Sun, planets, and Titan in kg (same order as INITIAL_STATE_KM bodies). */
     private static final List<Double> BASE_MASSES = Arrays.asList(
             1.99e30, 3.30e23, 4.87e24, 5.97e24, 7.35e22,
             6.42e23, 1.90e27, 5.68e26, 1.35e23, 8.68e25, 1.02e26
     );
 
-    // Planet radii in km, same order as INITIAL_STATE_KM bodies
+    /** Radii of Sun, planets, and Titan in km (same order as INITIAL_STATE_KM bodies). */
     private static final double[] PLANET_RADII_KM = {
             696340, 2440, 6052, 6371, 1737, 3390, 69911, 58232, 2575, 25362, 24622
     };
 
+    /** Index of Earth, Titan and Number of base bodies w/o the probe in the INITIAL_STATE_KM array. */
     private static final int EARTH_BODY_INDEX = 3;
     private static final int TITAN_BODY_INDEX = 8;
     private static final int BASE_NUM_BODIES = 11; // Sun..Neptune (no probe)
 
-    // appended probe will be index BASE_NUM_BODIES (i.e. 11)
+    /** Index of probe when appended to the SolarSystem. (i.e. 11) */
     private static final int PROBE_INDEX = BASE_NUM_BODIES;
 
-    // time units
+    /** Seconds per Time unit. */
     private static final double SECONDS_PER_DAY = 86400.0;
     private static final double ONE_YEAR_SECONDS = SECONDS_PER_DAY * 365.0;
     private static final double DT = SECONDS_PER_DAY; // 1 day step
 
-    // velocity constraint: 60 km/s
+    /** Maximum allowed initial velocity relative to Earth in km/s. */
     private static final double MAX_V_KM_PER_S = 60.0; //
 
-    // probe mass (affects its own motion)
+    /** Probe mass in kg. (only affects its own motion) */
     private static final double PROBE_MASS_KG = 50_000.0;
 
-    // solver + RNG
+    /** ODE solver (RK4). */
     private final ODESolver solver = new RK4Solver();
     private final Random rng = new Random();
 
@@ -178,8 +189,11 @@ public class ExploratoryMission {
     }
 
     /**
-     * Evaluate cost (final distance to Titan in km) for a probe starting at x = [rx..vz].
-     * Returns large penalty if probe collides with any planet during the year.
+     * Computes the cost for a given probe starting state as the final
+     * distance to Titan after one year of simulation.
+     *
+     * @param x Initial probe state [rx, ry, rz, vx, vy, vz] in km and km/s.
+     * @return Final distance to Titan in km, or a large penalty if collision occurs.
      */
     private double evaluateCost(double[] x) {
         try {
@@ -224,7 +238,12 @@ public class ExploratoryMission {
         }
     }
 
-    /** Returns true if probe (last body) is inside any planet radius. */
+    /**
+     * Checks whether the probe collides with any celestial body.
+     *
+     * @param y State vector of the system (all bodies).
+     * @return true if the probe is inside any planet's radius; false otherwise.
+     */
     private boolean probeCollided(Vector y) {
         double px = y.get(PROBE_INDEX * 6);
         double py = y.get(PROBE_INDEX * 6 + 1);
@@ -244,7 +263,17 @@ public class ExploratoryMission {
         return false;
     }
 
-    /** Place probe on Earth's surface (random direction) and set initial velocity = Earth's vel. */
+    /**
+     * Places the probe randomly on Earth's surface with velocity equal to Earth's velocity.
+     * <p>
+     * The random point is generated using uniform sampling on a sphere:
+     * <ul>
+     *   <li>θ (theta) is longitude in [0, 2π).</li>
+     *   <li>φ (phi) is polar angle from z-axis, computed from a uniform v in [0,1].</li>
+     * </ul>
+     *
+     * @return Probe initial state [rx, ry, rz, vx, vy, vz].
+     */
     private double[] placeProbeOnEarthSurface() {
         int earthPosIndex = EARTH_BODY_INDEX * 6;
         double ex = INITIAL_STATE_KM[earthPosIndex];
@@ -260,8 +289,8 @@ public class ExploratoryMission {
         // pick random point on sphere (uniform)
         double u = rng.nextDouble();
         double v = rng.nextDouble();
-        double theta = 2.0 * Math.PI * u;
-        double phi = Math.acos(2.0 * v - 1.0);
+        double theta = 2.0 * Math.PI * u; // [scale 360 between (0,1) i.e. (0,360)]
+        double phi = Math.acos(2.0 * v - 1.0); // [v=1 -> acos(1) & v=0 -> acos(-1)]
         double dx = Math.sin(phi) * Math.cos(theta);
         double dy = Math.sin(phi) * Math.sin(theta);
         double dz = Math.cos(phi);
@@ -273,7 +302,11 @@ public class ExploratoryMission {
         return new double[] { rx, ry, rz, evx, evy, evz };
     }
 
-    /** Ensure the probe initial position remains on Earth's surface (distance = earth radius). */
+    /**
+     * Adjusts probe position to lie exactly on Earth's surface.
+     *
+     * @param x Probe state [rx, ry, rz, vx, vy, vz].
+     */
     private void enforceProbeOnEarthSurface(double[] x) {
         int earthPosIndex = EARTH_BODY_INDEX * 6;
         double ex = INITIAL_STATE_KM[earthPosIndex];
@@ -299,8 +332,10 @@ public class ExploratoryMission {
     }
 
     /**
-     * Enforce the maximum allowed initial velocity relative to Earth's velocity.
-     * If relative speed > MAX_V_KM_PER_S, scale the delta-v so the relative speed equals the max.
+     * Ensures the probe's initial velocity relative to Earth does not exceed the
+     * maximum allowed.
+     *
+     * @param x Probe state [rx, ry, rz, vx, vy, vz].
      */
     private void enforceVelocityConstraintRelativeToEarth(double[] x) {
         int earthPosIdx = EARTH_BODY_INDEX * 6;
@@ -320,7 +355,14 @@ public class ExploratoryMission {
         }
     }
 
-    /** small helper: randomize around base (not used for position since we enforce Earth surface). */
+    /**
+     * Adds random perturbations to a base state (used for velocity exploration).
+     *
+     * @param base      Base state [rx, ry, rz, vx, vy, vz].
+     * @param posSpread Maximum position deviation in km.
+     * @param velSpread Maximum velocity deviation in km/s.
+     * @return Randomized state vector.
+     */
     private double[] randomizeAround(double[] base, double posSpread, double velSpread) {
         double[] out = base.clone();
         for (int i = 0; i < 3; i++) out[i] = base[i] + (rng.nextDouble() * 2 - 1) * posSpread;
