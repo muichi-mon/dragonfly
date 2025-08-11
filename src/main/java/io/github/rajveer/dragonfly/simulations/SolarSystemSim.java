@@ -68,7 +68,7 @@ public class SolarSystemSim {
         List<double[]> ys_fig = new ArrayList<>();
         List<double[]> zs_fig = new ArrayList<>();
 
-// Output the trajectory
+        // Output the trajectory
         for (int i = 0; i < trajectory.size(); i++) {
             System.out.println("Day " + i + ": " + trajectory.get(i));
             xs_fig.add(new double[]{i, trajectory.get(i).get(0 + (6*4))});
@@ -92,7 +92,7 @@ public class SolarSystemSim {
         SolarSystem solarSystem = new SolarSystem(masses);
         ODESolver solver = new RK4Solver(); // or just: RK4Solver rk4 = new RK4Solver();
 
-// Simulation parameters
+        // Simulation parameters
         double t0 = 0;
         double tEnd = 86400 * 365 * 4; // 1 year
         double dt = 86400;         // 1 day

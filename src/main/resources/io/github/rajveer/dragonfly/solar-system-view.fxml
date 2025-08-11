@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="io.github.rajveer.dragonfly.SolarSystem3D">
+
+<!-- Center: 3D subscene placeholder -->
+<center>
+    <!-- We'll replace this in the controller with an actual SubScene -->
+    <StackPane fx:id="subSceneContainer"
+               prefWidth="800"
+               prefHeight="600"
+               style="-fx-background-color: black;"/>
+</center>
+
+<!-- Bottom: Slider for day selection -->
+<bottom>
+    <Slider fx:id="daySlider"
+            min="0"
+            max="364"
+            value="0"
+            blockIncrement="1"
+            majorTickUnit="50"
+            showTickMarks="true"
+            showTickLabels="true"
+            prefWidth="800"/>
+</bottom>
+
+</BorderPane>
+
