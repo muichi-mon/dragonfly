@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 
 public class SceneFactory {
@@ -23,6 +24,17 @@ public class SceneFactory {
         );
         subScene.setFill(Color.BLACK);
         subScene.setCamera(camera);
+
+        // Zoom handling
+        subScene.addEventHandler(ScrollEvent.SCROLL, event -> {
+            double zoomSpeed = 20; // Smaller = slower zoom
+            double newZ = camera.getTranslateZ() + event.getDeltaY() * zoomSpeed * -0.05;
+
+            if (newZ < -300 && newZ > -3000) {
+                camera.setTranslateZ(newZ);
+            }
+
+        });
 
         return subScene;
     }

@@ -60,7 +60,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>io.github.rajveer.dragonfly/io.github.rajveer.dragonfly.HelloApplication
+                            <mainClass>io.github.rajveer.dragonfly/io.github.rajveer.dragonfly.SolarSystem3D
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
