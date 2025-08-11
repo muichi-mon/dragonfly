@@ -6,7 +6,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="io.github.rajveer.dragonfly.SolarSystem3D">
+            fx:controller="io.github.rajveer.dragonfly.gui.SolarSystemController">
 
 <center>
     <StackPane fx:id="subSceneContainer"
