@@ -1,6 +1,11 @@
 package io.github.rajveer.dragonfly.gui;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class SolarSystemData {
+
+    public static final int SECONDS_PER_DAY = 86400;
 
     public static final String[] PLANET_NAMES = {
             "Sun", "Mercury", "Venus", "Earth", "Moon",
@@ -11,6 +16,11 @@ public class SolarSystemData {
             696340, 2440, 6052, 6371, 1737,
             3390, 69911, 58232, 2575, 25362, 24622
     };
+
+    public static final List<Double> MASS = Arrays.asList(
+            1.99e30, 3.30e23, 4.87e24, 5.97e24, 7.35e22,
+            6.42e23, 1.90e27, 5.68e26, 1.35e23, 8.68e25, 1.02e26
+    );
 
     public static final double[] INITIAL_STATE = {
             // Sun

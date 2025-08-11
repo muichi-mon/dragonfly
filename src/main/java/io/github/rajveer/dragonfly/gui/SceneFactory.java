@@ -11,7 +11,7 @@ public class SceneFactory {
 
     public static SubScene createSubScene(Group root) {
         PerspectiveCamera camera = new PerspectiveCamera(true);
-        camera.setTranslateZ(-200);
+        camera.setTranslateZ(-800);
         camera.setNearClip(0.1);
         camera.setFarClip(10000);
 
