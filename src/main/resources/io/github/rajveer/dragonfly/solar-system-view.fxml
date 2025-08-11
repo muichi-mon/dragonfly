@@ -8,16 +8,13 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="io.github.rajveer.dragonfly.SolarSystem3D">
 
-<!-- Center: 3D subscene placeholder -->
 <center>
-    <!-- We'll replace this in the controller with an actual SubScene -->
     <StackPane fx:id="subSceneContainer"
                prefWidth="800"
                prefHeight="600"
                style="-fx-background-color: black;"/>
 </center>
 
-<!-- Bottom: Slider for day selection -->
 <bottom>
     <Slider fx:id="daySlider"
             min="0"
