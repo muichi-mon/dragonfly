@@ -102,9 +102,9 @@ public class SolarSystemController {
                 double pz = state.get(offset + 2);
 
                 double scale = 1e-6; // adjust for scene size
-                planetNodes.get(i).setTranslateX(px * scale);
-                planetNodes.get(i).setTranslateY(py * scale);
-                planetNodes.get(i).setTranslateZ(pz * scale);
+                planetNodes.get(i).setTranslateX(px * SolarSystemData.DISTANCE_SCALE);
+                planetNodes.get(i).setTranslateY(py * SolarSystemData.DISTANCE_SCALE);
+                planetNodes.get(i).setTranslateZ(pz * SolarSystemData.DISTANCE_SCALE);
             }
         });
     }
