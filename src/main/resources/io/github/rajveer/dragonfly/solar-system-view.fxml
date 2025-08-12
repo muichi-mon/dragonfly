@@ -12,7 +12,7 @@
     <StackPane fx:id="subSceneContainer"
                prefWidth="800"
                prefHeight="600"
-               style="-fx-background-color: black;"/>
+               />
 </center>
 
 <bottom>

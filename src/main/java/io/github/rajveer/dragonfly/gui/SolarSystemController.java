@@ -9,8 +9,9 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.SubScene;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.transform.Rotate;
 
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ public class SolarSystemController {
 
     @FXML
     public void initialize() {
+
+        setBackground("/io/github/rajveer/dragonfly/2k_stars_milky_way.jpg");
         setup3DScene();
         setupMouseControl();
 
@@ -68,6 +71,19 @@ public class SolarSystemController {
 
         subSceneContainer.getChildren().add(subScene);
     }
+
+    public void setBackground(String path) {
+        Image image = new Image(getClass().getResource(path).toExternalForm());
+        BackgroundImage bgImage =
+                new BackgroundImage(
+                        image,
+                        BackgroundRepeat.NO_REPEAT,
+                        BackgroundRepeat.NO_REPEAT,
+                        BackgroundPosition.CENTER,
+                        new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true));
+        subSceneContainer.setBackground(new Background(bgImage));
+    }
+
 
     private void setupMouseControl() {
         subSceneContainer.setOnMousePressed(this::onMousePressed);

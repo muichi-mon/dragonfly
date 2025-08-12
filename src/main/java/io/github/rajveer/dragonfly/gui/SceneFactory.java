@@ -22,7 +22,7 @@ public class SceneFactory {
                 true,
                 SceneAntialiasing.BALANCED
         );
-        subScene.setFill(Color.BLACK);
+        subScene.setFill(Color.TRANSPARENT);
         subScene.setCamera(camera);
 
         // Zoom handling
