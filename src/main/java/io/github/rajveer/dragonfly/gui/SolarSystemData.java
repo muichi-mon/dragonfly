@@ -6,8 +6,8 @@ import java.util.List;
 public class SolarSystemData {
 
     public static final int SECONDS_PER_DAY = 86400;
-    public static final double DISTANCE_SCALE = 1e-7;
-    public static final double SIZE_SCALE = 5e-5;
+    public static final double DISTANCE_SCALE = 9e-7;
+    public static final double SIZE_SCALE = 9e-4;
 
     public static final String[] PLANET_NAMES = {
             "Sun", "Mercury", "Venus", "Earth", "Moon",
