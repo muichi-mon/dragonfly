@@ -69,6 +69,6 @@ mvn clean javafx:run
 ## 📈 Example Interface
 
 ### GUI Solar System Simulation
-![Solar System GUI](src/main/resources/io/github/rajveer/dragonfly/images/lotka-volterra-plot.png)
+![Solar System GUI](src/main/resources/io/github/rajveer/dragonfly/gui.jpg)
 
 
