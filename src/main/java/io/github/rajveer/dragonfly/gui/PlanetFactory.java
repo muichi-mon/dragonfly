@@ -1,10 +1,15 @@
 package io.github.rajveer.dragonfly.gui;
 
+import javafx.animation.Animation;
+import javafx.animation.Interpolator;
+import javafx.animation.RotateTransition;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
+import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
 
 public class PlanetFactory {
 
@@ -15,7 +20,7 @@ public class PlanetFactory {
             double yKm = initialState[i * 6 + 1];
             double zKm = initialState[i * 6 + 2];
 
-            Sphere planet = new Sphere(i == 0 || i == 6? radii[i] * SolarSystemData.SIZE_SCALE * 1/30 : radii[i] * SolarSystemData.SIZE_SCALE);
+            Sphere planet = new Sphere(i == 0 || i == 6? radii[i] * SolarSystemData.SIZE_SCALE * (1.0/30.0) : radii[i] * SolarSystemData.SIZE_SCALE);
             planet.setTranslateX(xKm * SolarSystemData.DISTANCE_SCALE);
             planet.setTranslateY(yKm * SolarSystemData.DISTANCE_SCALE);
             planet.setTranslateZ(zKm * SolarSystemData.DISTANCE_SCALE);
@@ -60,7 +65,31 @@ public class PlanetFactory {
             }
             planet.setMaterial(material);
 
+            RotateTransition rotation = new RotateTransition(Duration.seconds(getRotationPeriod(i)), planet);
+            rotation.setAxis(Rotate.Z_AXIS);
+            rotation.setByAngle(360);
+            rotation.setCycleCount(Animation.INDEFINITE);
+            rotation.setInterpolator(Interpolator.LINEAR);
+            rotation.play();
+
             root.getChildren().add(planet);
+        }
+    }
+
+    private static double getRotationPeriod(int i) {
+        switch (i) {
+            case 0:  return 25;  // Sun
+            case 1:  return 58;  // Mercury
+            case 2:  return 243; // Venus
+            case 3:  return 1;   // Earth
+            case 4:  return 27;  // Moon
+            case 5:  return 1.03;// Mars
+            case 6:  return 0.41;// Jupiter
+            case 7:  return 0.45;// Saturn
+            case 8:  return 16;  // Titan
+            case 9:  return 0.72;// Uranus
+            case 10: return 0.67;// Neptune
+            default: return 1;
         }
     }
 }
