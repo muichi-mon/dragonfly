@@ -1,10 +1,10 @@
 package io.github.rajveer.dragonfly.gui;
 
+import io.github.rajveer.dragonfly.utils.ImageUtils;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
@@ -28,37 +28,39 @@ public class PlanetFactory {
             PhongMaterial material = new PhongMaterial();
             switch (i) {
                 case 0:
-                    material.setDiffuseMap(new Image(PlanetFactory.class.getResource("/io/github/rajveer/dragonfly/2k_sun.jpg").toExternalForm()));
+                    material.setDiffuseMap(ImageUtils.rotateLeft("/io/github/rajveer/dragonfly/2k_sun.jpg"));
                     break;
                 case 1:
-                    material.setDiffuseMap(new Image(PlanetFactory.class.getResource("/io/github/rajveer/dragonfly/2k_mercury.jpg").toExternalForm()));
+                    material.setDiffuseMap(ImageUtils.rotateLeft("/io/github/rajveer/dragonfly/2k_mercury.jpg"));
                     break;
                 case 2:
-                    material.setDiffuseMap(new Image(PlanetFactory.class.getResource("/io/github/rajveer/dragonfly/2k_venus_atmosphere.jpg").toExternalForm()));
+                    material.setDiffuseMap(ImageUtils.rotateLeft("/io/github/rajveer/dragonfly/2k_venus_atmosphere.jpg"));
                     break;
                 case 3:
-                    material.setDiffuseMap(new Image(PlanetFactory.class.getResource("/io/github/rajveer/dragonfly/2k_earth.jpg").toExternalForm()));
+                    material.setDiffuseMap(ImageUtils.rotateLeft("/io/github/rajveer/dragonfly/2k_earth.jpg"));
                     break;
                 case 4:
-                    material.setDiffuseMap(new Image(PlanetFactory.class.getResource("/io/github/rajveer/dragonfly/2k_moon.jpg").toExternalForm()));
+                    material.setDiffuseMap(ImageUtils.rotateLeft("/io/github/rajveer/dragonfly/2k_moon.jpg"));
                     break;
                 case 5:
-                    material.setDiffuseMap(new Image(PlanetFactory.class.getResource("/io/github/rajveer/dragonfly/2k_mars.jpg").toExternalForm()));
+                    material.setDiffuseMap(ImageUtils.rotateLeft("/io/github/rajveer/dragonfly/2k_mars.jpg"));
                     break;
                 case 6:
-                    material.setDiffuseMap(new Image(PlanetFactory.class.getResource("/io/github/rajveer/dragonfly/2k_jupiter.jpg").toExternalForm()));
+                    material.setDiffuseMap(ImageUtils.rotateLeft("/io/github/rajveer/dragonfly/2k_jupiter.jpg"));
                     break;
                 case 7:
-                    material.setDiffuseMap(new Image(PlanetFactory.class.getResource("/io/github/rajveer/dragonfly/2k_saturn.jpg").toExternalForm()));
+                    // Rotate Saturn texture right for proper alignment
+                    material.setDiffuseMap(ImageUtils.rotateRight("/io/github/rajveer/dragonfly/2k_saturn.jpg"));
                     break;
                 case 8:
-                    material.setDiffuseMap(new Image(PlanetFactory.class.getResource("/io/github/rajveer/dragonfly/2k_titan.jpg").toExternalForm()));
+                    material.setDiffuseMap(ImageUtils.rotateLeft("/io/github/rajveer/dragonfly/2k_titan.jpg"));
                     break;
                 case 9:
-                    material.setDiffuseMap(new Image(PlanetFactory.class.getResource("/io/github/rajveer/dragonfly/2k_uranus.jpg").toExternalForm()));
+                    // Rotate Uranus texture right
+                    material.setDiffuseMap(ImageUtils.rotateRight("/io/github/rajveer/dragonfly/2k_uranus.jpg"));
                     break;
                 case 10:
-                    material.setDiffuseMap(new Image(PlanetFactory.class.getResource("/io/github/rajveer/dragonfly/2k_neptune.jpg").toExternalForm()));
+                    material.setDiffuseMap(ImageUtils.rotateLeft("/io/github/rajveer/dragonfly/2k_neptune.jpg"));
                     break;
                 default:
                     material.setDiffuseColor(Color.LIGHTGRAY); // fallback

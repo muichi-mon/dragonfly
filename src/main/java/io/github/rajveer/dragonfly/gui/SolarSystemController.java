@@ -128,7 +128,7 @@ public class SolarSystemController {
 
     private static List<Vector> getVectors(List<Double> masses, double[] initialStateKm) {
         SolarSystem solarSystem = new SolarSystem(masses);
-        ODESolver solver = new RK4Solver(); // or just: RK4Solver rk4 = new RK4Solver();
+        ODESolver solver = new RK4Solver();
 
         // Simulation parameters
         double t0 = 0;
